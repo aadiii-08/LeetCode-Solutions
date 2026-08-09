@@ -2,8 +2,8 @@ class Solution {
     private int idx = 0;
 
     public TreeNode bstFromPreorder(int[] preorder) {
-        int lr = -(int)1e9 - 1;
-        int rr = (int)1e9 + 1;
+        int lr = Integer.MIN_VALUE;
+        int rr = Integer.MAX_VALUE;
 
         return insert(preorder, lr, rr);
     }
