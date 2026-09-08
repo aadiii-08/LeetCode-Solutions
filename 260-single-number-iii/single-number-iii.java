@@ -1,23 +1,20 @@
 class Solution {
     public int[] singleNumber(int[] nums) {
-        Set<Integer> set = new HashSet<>();
+        Arrays.sort(nums);
+        List<Integer> list = new ArrayList<>();
 
         for(int i = 0; i < nums.length; i++){
-            if(set.contains(nums[i])){
-                set.remove(nums[i]);
+            if(list.size() > 0 && list.get(list.size() - 1) == nums[i]){
+                list.remove(list.size() - 1);
             }else{
-                set.add(nums[i]);
+                list.add(nums[i]);
             }
         }
 
-        int n = set.size();
+        int n = list.size();
         int[] ans = new int[n];
-        int idx = 0;
-
-        for(int i = 0; i < nums.length; i++){
-            if(set.contains(nums[i])){
-                ans[idx++] = nums[i];
-            }
+        for(int i = 0; i < n; i++){
+            ans[i] = list.get(i);
         }
 
         return ans;
