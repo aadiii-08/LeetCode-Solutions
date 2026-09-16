@@ -1,8 +1,11 @@
 class Solution:
     def twoSum(self, numbers: list[int], target: int) -> list[int]:
-        seen = {}
-        for i in range(len(numbers)):
-            need = target - numbers[i]
-            if need in seen:
-                return[seen[need],i+1]
-            seen[numbers[i]] = i+1
+        low = 0
+        high = len(numbers)-1
+        while low<high:
+            if (numbers[low]+numbers[high])>target:
+                high -= 1
+            elif (numbers[low]+numbers[high])<target:
+                low += 1
+            else:
+                return [low+1, high+1]
