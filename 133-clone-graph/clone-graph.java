@@ -29,8 +29,8 @@ class Solution {
         map.put(node, clone);
         while (!q.isEmpty()) {
             Node curr = q.poll();
+            Node cloneCurr = map.get(curr);
             for (Node neighbour : curr.neighbors) {
-                Node cloneCurr = map.get(curr);
                 Node cloneNeighbour;
                 if (map.containsKey(neighbour)) {
                     cloneNeighbour = map.get(neighbour);
