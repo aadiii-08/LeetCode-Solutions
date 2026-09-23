@@ -20,27 +20,25 @@ class Solution {
         time = 0;
         dt = new int[n];
         low = new int[n];
-        boolean[] vis = new boolean[n];
         List<List<Integer>> bridges = new ArrayList<>();
 
         for (int i = 0; i < n; i++) {
-            if (!vis[i]) {
-                dfs(i, -1, adj, vis, bridges);
+            if (dt[i] == 0) {
+                dfs(i, -1, adj, bridges);
             }
         }
 
         return bridges;
     }
 
-    public void dfs(int u, int parU, ArrayList<ArrayList<Integer>> adj, boolean[] vis, List<List<Integer>> bridges) {
-        vis[u] = true;
+    public void dfs(int u, int parU, ArrayList<ArrayList<Integer>> adj, List<List<Integer>> bridges) {
         time++;
         dt[u] = time;
         low[u] = time;
 
         for (int v : adj.get(u)) {
-            if (!vis[v]) {
-                dfs(v, u, adj, vis, bridges);
+            if (dt[v] == 0) {
+                dfs(v, u, adj, bridges);
                 // update low
                 low[u] = Math.min(low[u], low[v]);
 
