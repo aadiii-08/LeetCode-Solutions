@@ -18,22 +18,43 @@
 //     }
 // }
 
-
 // bottom up
+// class Solution {
+//     public int rob(int[] nums) {
+//         int n = nums.length;
+//         int[] dp = new int[n + 1];
+
+//         dp[0] = 0;
+//         dp[1] = nums[0];
+
+//         for(int i = 2; i <= n; i++){
+//             int steal = nums[i - 1] + dp[i - 2];
+//             int skip = dp[i - 1];
+//             dp[i] = Math.max(steal, skip);
+//         }
+
+//         return dp[n];
+//     }
+// }
+
+// constant space
 class Solution {
     public int rob(int[] nums) {
         int n = nums.length;
-        int[] dp = new int[n + 1];
+        if (n == 1)
+            return nums[0];
+        if (n == 2)
+            return Math.max(nums[0], nums[1]);
 
-        dp[0] = 0;
-        dp[1] = nums[0];
+        int prev_prev = 0, prev = nums[0];
+        for (int i = 2; i <= n; i++) {
 
-        for(int i = 2; i <= n; i++){
-            int steal = nums[i - 1] + dp[i - 2];
-            int skip = dp[i - 1];
-            dp[i] = Math.max(steal, skip);
+            int steal = nums[i - 1] + prev_prev;
+            int skip = prev;
+            prev_prev = prev;
+            prev = Math.max(steal, skip);
         }
 
-        return dp[n];
+        return Math.max(prev_prev, prev);
     }
 }
