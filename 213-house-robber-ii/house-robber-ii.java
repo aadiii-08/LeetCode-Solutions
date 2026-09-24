@@ -28,36 +28,63 @@
 //     }
 // }
 
-
-
 // bottom up
+// class Solution {
+//     int[] dp;
+//     public int rob(int[] nums) {
+//         int n = nums.length;
+//         if(n == 1) return nums[0];
+//         if(n ==2) return Math.max(nums[0], nums[1]);
+
+//         int[] dp = new int[n + 1];
+//         dp[0] = 0;
+
+//         for(int i = 1; i <= n - 1; i++){
+//             int steal = nums[i - 1] + ((i - 2 >= 0) ? dp[i - 2] : 0);
+//             int skip = dp[i - 1];
+
+//             dp[i] = Math.max(steal, skip);
+//         }
+//         int firstIdx = dp[n - 1];
+
+//         Arrays.fill(dp, 0);
+//         for(int i = 2; i <= n; i++){
+//             int steal = nums[i - 1] + (i - 2 >= 0 ? dp[i - 2] : 0);
+//             int skip = dp[i - 1];
+
+//             dp[i] = Math.max(steal, skip);
+//         }
+//         int secondIdx = dp[n];
+
+//         return Math.max(firstIdx, secondIdx);
+//     }
+// }
+
+// constant space
 class Solution {
-    int[] dp;
     public int rob(int[] nums) {
         int n = nums.length;
-        if(n == 1) return nums[0];
-        if(n ==2) return Math.max(nums[0], nums[1]);
+        if (n == 1)
+            return nums[0];
+        if (n == 2)
+            return Math.max(nums[0], nums[1]);
 
-        int[] dp = new int[n + 1];
-        dp[0] = 0;
+        int take = solve(0, n - 1, nums);
+        int notTake = solve(1, n, nums);
 
-        for(int i = 1; i <= n - 1; i++){
-            int steal = nums[i - 1] + ((i - 2 >= 0) ? dp[i - 2] : 0);
-            int skip = dp[i - 1];
+        return Math.max(take, notTake);
+    }
 
-            dp[i] = Math.max(steal, skip);
+    int solve(int l, int r, int[] nums){
+        int prev_prev = 0, prev = 0;
+        for(int i = l; i < r; i++){
+            int skip = prev;
+            int steal = nums[i] + prev_prev;
+
+            prev_prev = prev;
+            prev = Math.max(skip, steal);
         }
-        int firstIdx = dp[n - 1];
 
-        Arrays.fill(dp, 0);
-        for(int i = 2; i <= n; i++){
-            int steal = nums[i - 1] + (i - 2 >= 0 ? dp[i - 2] : 0);
-            int skip = dp[i - 1];
-
-            dp[i] = Math.max(steal, skip);
-        }
-        int secondIdx = dp[n];
-
-        return Math.max(firstIdx, secondIdx);
+        return prev;
     }
 }
