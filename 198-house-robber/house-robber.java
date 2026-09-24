@@ -55,6 +55,6 @@ class Solution {
             prev = Math.max(steal, skip);
         }
 
-        return Math.max(prev_prev, prev);
+        return prev;
     }
 }
