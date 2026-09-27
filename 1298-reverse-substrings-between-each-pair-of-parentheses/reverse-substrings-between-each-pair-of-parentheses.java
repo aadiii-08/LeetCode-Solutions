@@ -5,7 +5,7 @@ class Solution {
         char[] arr = s.toCharArray();
 
         for(int i = 0; i < n; i++){
-            int curr = s.charAt(i);
+            char curr = s.charAt(i);
             if(curr == '('){
                 st.push(i);
             }else if(curr == ')'){
