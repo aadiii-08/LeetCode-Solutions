@@ -25,7 +25,7 @@
 //     }
 // }
 
-
+// without stack sc is O(1)
 class Solution {
     public int longestValidParentheses(String s) {
         int n = s.length();
