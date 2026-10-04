@@ -85,39 +85,78 @@
 
 
 // using stack
+// class Solution {
+//     public boolean checkValidString(String s) {
+//         int n = s.length();
+//         Stack<Integer> st = new Stack<>();
+//         Stack<Integer> star = new Stack<>();
+//         // int star = 0;
+
+//         for(int i = 0; i < n; i++){
+//             char ch = s.charAt(i);
+
+//             if(ch == '*'){
+//                 star.push(i);
+//             }else if(ch == '('){
+//                 st.push(i);
+//             }else{
+//                 if(!st.isEmpty()){
+//                     st.pop();
+//                 }else if(!star.isEmpty()){
+//                     star.pop();
+//                 }else{
+//                     return false;
+//                 }
+//             }
+//         }
+
+//         while (!st.isEmpty() && !star.isEmpty()) {
+//             if (st.peek() > star.peek()) {
+//                 return false;
+//             }
+//             st.pop();
+//             star.pop();
+//         }
+
+//         return st.isEmpty();
+//     }
+// }
+
+
+
+//T.C : O(n)
+//S.C :O(1)
+
 class Solution {
     public boolean checkValidString(String s) {
+        int open = 0;
+        int close = 0;
         int n = s.length();
-        Stack<Integer> st = new Stack<>();
-        Stack<Integer> star = new Stack<>();
-        // int star = 0;
-
-        for(int i = 0; i < n; i++){
-            char ch = s.charAt(i);
-
-            if(ch == '*'){
-                star.push(i);
-            }else if(ch == '('){
-                st.push(i);
-            }else{
-                if(!st.isEmpty()){
-                    st.pop();
-                }else if(!star.isEmpty()){
-                    star.pop();
-                }else{
-                    return false;
-                }
+        
+        for (int i = 0; i < n; i++) {
+            if (s.charAt(i) == '(' || s.charAt(i) == '*') {
+                open++;
+            } else {
+                open--;
             }
-        }
-
-        while (!st.isEmpty() && !star.isEmpty()) {
-            if (st.peek() > star.peek()) {
+                
+            if (open < 0) {
                 return false;
             }
-            st.pop();
-            star.pop();
         }
 
-        return st.isEmpty();
+        for (int i = n - 1; i >= 0; i--) {
+            if (s.charAt(i) == ')' || s.charAt(i) == '*') {
+                close++;
+            } else {
+                close--;
+            }
+            
+            if (close < 0) {
+                return false;
+            }
+        }
+        
+        return true;
     }
 }
