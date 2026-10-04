@@ -46,35 +46,78 @@
 // }
 
 
+
+ 
 //bottom up
+// class Solution {
+//     public boolean checkValidString(String s) {
+//         int n = s.length();
+//         boolean[][] t = new boolean[n + 1][n + 1];
+//         t[n][0] = true;
+
+//         for(int i = n - 1; i >= 0; i--){
+//             for(int open = 0; open < n; open++){
+//                 boolean isValid = false;
+//                 char ch = s.charAt(i);
+
+//                 if(ch == '*'){
+//                     isValid |= t[i + 1][open + 1];
+//                     if(open > 0){
+//                         isValid |= t[i + 1][open -1];
+//                     }
+//                     isValid |= t[i + 1][open];
+//                 }else if(ch == '('){
+//                     isValid |= t[i + 1][open + 1];
+//                 }else{
+//                     if(open > 0){
+//                         isValid |= t[i + 1][open - 1];
+//                     }
+//                 }
+//                 t[i][open] = isValid;
+//             }
+//         }
+
+//         return t[0][0];
+//     }
+// }
+
+
+
+
+// using stack
 class Solution {
     public boolean checkValidString(String s) {
         int n = s.length();
-        boolean[][] t = new boolean[n + 1][n + 1];
-        t[n][0] = true;
+        Stack<Integer> st = new Stack<>();
+        Stack<Integer> star = new Stack<>();
+        // int star = 0;
 
-        for(int i = n - 1; i >= 0; i--){
-            for(int open = 0; open < n; open++){
-                boolean isValid = false;
-                char ch = s.charAt(i);
+        for(int i = 0; i < n; i++){
+            char ch = s.charAt(i);
 
-                if(ch == '*'){
-                    isValid |= t[i + 1][open + 1];
-                    if(open > 0){
-                        isValid |= t[i + 1][open -1];
-                    }
-                    isValid |= t[i + 1][open];
-                }else if(ch == '('){
-                    isValid |= t[i + 1][open + 1];
+            if(ch == '*'){
+                star.push(i);
+            }else if(ch == '('){
+                st.push(i);
+            }else{
+                if(!st.isEmpty()){
+                    st.pop();
+                }else if(!star.isEmpty()){
+                    star.pop();
                 }else{
-                    if(open > 0){
-                        isValid |= t[i + 1][open - 1];
-                    }
+                    return false;
                 }
-                t[i][open] = isValid;
             }
         }
 
-        return t[0][0];
+        while (!st.isEmpty() && !star.isEmpty()) {
+            if (st.peek() > star.peek()) {
+                return false;
+            }
+            st.pop();
+            star.pop();
+        }
+
+        return st.isEmpty();
     }
 }
