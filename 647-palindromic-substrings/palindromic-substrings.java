@@ -1,38 +1,68 @@
+// brute force
+
+// class Solution {
+//     int dp[][];
+
+//     public int countSubstrings(String s) {
+//         int ans = 0;
+//         dp = new int[1001][1001];
+//         for (int[] row : dp) {
+//             Arrays.fill(row, -1);
+//         }
+
+//         for (int i = 0; i < s.length(); i++) {
+//             for (int j = i; j < s.length(); j++) {
+//                 if (isPalindrom(s, i, j))
+//                     ans++;
+//             }
+//         }
+
+//         return ans;
+//     }
+
+//     boolean isPalindrom(String s, int i, int j) {
+//         if (i > j) {
+//             return true;
+//         }
+
+//         if (dp[i][j] != -1) {
+//             return dp[i][j] == 0 ? false : true;
+//         }
+
+//         if (s.charAt(i) == s.charAt(j)) {
+//             boolean result = isPalindrom(s, i + 1, j - 1);
+//             dp[i][j] = result ? 1 : 0;
+//             return result;
+//         }
+//         dp[i][j] = 0;
+//         return false;
+//     }
+// }
+
+
+
 class Solution {
-    int dp[][];
-
     public int countSubstrings(String s) {
+        int n = s.length();
         int ans = 0;
-        dp = new int[1001][1001];
-        for (int[] row : dp) {
-            Arrays.fill(row, -1);
-        }
+        boolean[][] t = new boolean[n][n];
 
-        for (int i = 0; i < s.length(); i++) {
-            for (int j = i; j < s.length(); j++) {
-                if (isPalindrom(s, i, j))
-                    ans++;
+        for(int l = 1; l <= n; l++){
+            for(int i = 0; i + l - 1 < n; i++){
+                int j = i + l - 1;
+
+                if(i == j){
+                    t[i][j] = true;
+                }else if(i + 1 == j){
+                    t[i][j] = (s.charAt(i) == s.charAt(j));
+                }else{
+                    t[i][j] = (s.charAt(i) == s.charAt(j) && t[i+1][j-1]);
+                }
+
+                if(t[i][j]) ans++;
             }
         }
 
         return ans;
-    }
-
-    boolean isPalindrom(String s, int i, int j) {
-        if (i > j) {
-            return true;
-        }
-
-        if (dp[i][j] != -1) {
-            return dp[i][j] == 0 ? false : true;
-        }
-
-        if (s.charAt(i) == s.charAt(j)) {
-            boolean result = isPalindrom(s, i + 1, j - 1);
-            dp[i][j] = result ? 1 : 0;
-            return result;
-        }
-        dp[i][j] = 0;
-        return false;
     }
 }
