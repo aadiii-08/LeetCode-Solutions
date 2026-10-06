@@ -1,4 +1,4 @@
-// brute force
+// brute force recursion + memo tc-> O(n^3)
 
 // class Solution {
 //     int dp[][];
@@ -40,6 +40,7 @@
 // }
 
 
+// bottom up tc -> O(n^2)
 
 class Solution {
     public int countSubstrings(String s) {
